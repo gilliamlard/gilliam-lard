@@ -10,7 +10,7 @@ import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import { MessageCircle, Phone, Mail, ArrowRight } from "lucide-react";
 
-const SMS_LINK = "sms:5402099772?body=Hey%20Gilliam!%20I%20found%20you%20online%20and%20I'm%20interested%20in%20learning%20more%20about%20real%20estate%20in%20the%20NRV.";
+const SMS_LINK = "sms:5402099772?body=Hey%2C%20thank%20you%20for%20taking%20the%20time%20to%20reach%20out.%20I%27ve%20made%20this%20super%20easy%20with%20a%20pre-made%20text%20%E2%80%94%20all%20you%20do%20is%20click%20send%20and%20I%27ll%20get%20back%20to%20you%20as%20soon%20as%20I%20can%21%20Have%20a%20blessed%20rest%20of%20your%20day.";
 
 const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -63,7 +63,6 @@ export default function Contact() {
           <span className="text-maroon">your journey?</span>
         </motion.h2>
 
-        {/* Personal message */}
         <motion.p
           custom={0.2}
           variants={fadeUp}
@@ -71,7 +70,7 @@ export default function Contact() {
           animate={isInView ? "visible" : "hidden"}
           className="text-slate text-base sm:text-lg md:text-xl max-w-lg mx-auto mb-10 sm:mb-12 leading-relaxed"
         >
-          I've made this super easy — just click the button below and a pre-made text will open up. All you have to do is hit send, and I'll get back to you as soon as I can!
+          Send me a text and let's talk about your real estate goals. No pressure, just a conversation.
         </motion.p>
 
         {/* Primary CTA — keep the same bold style */}

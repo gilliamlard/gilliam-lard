@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 
-const SMS_LINK = "sms:5402099772?body=Hey%20Gilliam!%20I%20found%20you%20online%20and%20I'm%20interested%20in%20learning%20more%20about%20real%20estate%20in%20the%20NRV.";
+const SMS_LINK = "sms:5402099772?body=Hey%2C%20thank%20you%20for%20taking%20the%20time%20to%20reach%20out.%20I%27ve%20made%20this%20super%20easy%20with%20a%20pre-made%20text%20%E2%80%94%20all%20you%20do%20is%20click%20send%20and%20I%27ll%20get%20back%20to%20you%20as%20soon%20as%20I%20can%21%20Have%20a%20blessed%20rest%20of%20your%20day.";
 
 const HEADSHOT_URL = "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663388409088/NeWQjnDzLkLYOWDD.JPEG?Expires=1804191409&Signature=TjEbHf~5JmWCwGIl1qCb5W9s28gvkqS8NJe5o-CAxsim~8Mv-SKP2CyNeO~xF8DtyTRFvMRLGPEOln53KF3ip5DIoNbgcvKy5EjNyOHd3Iohcw9NA379D8Wpn0Qi3uqX2GvfiFSbzuB7yxuMq4UGSWiYy5vfb5m-cBqzMgqJOOGzcuCRCShNs3l7x~71yp3mbXcmtxkEHHW8BfNq1jO~3xaaC3sDdH6tCZ0kFNLJhgkyErvCmm2e-bOqb97qAP5GfJB9qKTnJ2Vc1YMi78FRW~nFDxNdaZBRP~LVUsrEPpFhZqpJ9PCCrcOGGhlJw4Su9iPsEfdhXh9MGwtFkDxXiA__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
@@ -104,15 +104,6 @@ export default function Hero() {
               style={{ fontFamily: "var(--font-body)" }}
             >
               Faithful service for your future.
-            </motion.p>
-
-            {/* Personal message above CTA */}
-            <motion.p
-              variants={fadeUp}
-              className="text-sm sm:text-base text-warm-gray leading-relaxed mb-5 max-w-md mx-auto lg:mx-0"
-              style={{ fontFamily: "var(--font-body)" }}
-            >
-              Hey, thank you for taking the time to reach out. I've made this super easy with a pre-made text — all you do is click send and I'll get back to you as soon as I can! Have a blessed rest of your day.
             </motion.p>
 
             {/* Primary CTA — SMS Button */}
