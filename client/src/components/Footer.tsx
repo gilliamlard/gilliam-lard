@@ -7,6 +7,24 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -26,9 +44,22 @@ export default function Footer() {
               GILLIAM LARD
             </h3>
             <p className="text-warm-gray text-sm mb-1">Real Estate Advisor</p>
-            <p className="text-warm-gray-light text-sm">
+            <p className="text-warm-gray-light text-sm mb-4">
               Berkshire Hathaway HomeServices | Mountain Sky Properties
             </p>
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/gilliamlard/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-warm-gray hover:text-maroon transition-colors duration-300 group"
+              aria-label="Follow on Instagram"
+            >
+              <div className="w-9 h-9 rounded-full border border-charcoal/10 flex items-center justify-center group-hover:border-maroon/30 group-hover:bg-maroon-soft transition-all duration-300">
+                <InstagramIcon className="w-4 h-4" />
+              </div>
+              <span className="text-sm font-body">@gilliamlard</span>
+            </a>
           </div>
 
           {/* Right — Contact */}

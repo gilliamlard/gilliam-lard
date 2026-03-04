@@ -26,3 +26,4 @@
 - [x] Write vitest tests for lead submission
 - [x] Make it classy, professional, not dated
 - [x] Merge "Get in Touch" CTA and "Let's Connect" lead form into one cohesive section
+- [x] Add Instagram link (https://www.instagram.com/gilliamlard/) to navbar and footer

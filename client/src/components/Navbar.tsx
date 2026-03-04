@@ -10,6 +10,24 @@ import { MessageCircle } from "lucide-react";
 
 const SMS_LINK = "sms:5402099772?body=Hey%2C%20thank%20you%20for%20taking%20the%20time%20to%20reach%20out.%20I%27ve%20made%20this%20super%20easy%20with%20a%20pre-made%20text%20%E2%80%94%20all%20you%20do%20is%20click%20send%20and%20I%27ll%20get%20back%20to%20you%20as%20soon%20as%20I%20can%21%20Have%20a%20blessed%20rest%20of%20your%20day.";
 
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -53,6 +71,15 @@ export default function Navbar() {
             className="hidden md:block text-sm text-slate hover:text-charcoal transition-colors duration-300 font-body"
           >
             Reviews
+          </a>
+          <a
+            href="https://www.instagram.com/gilliamlard/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full border border-charcoal/10 text-slate hover:text-maroon hover:border-maroon/30 transition-all duration-300"
+            aria-label="Instagram"
+          >
+            <InstagramIcon className="w-4 h-4" />
           </a>
           <a
             href="tel:5402099772"
