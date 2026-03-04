@@ -2,17 +2,26 @@
 
 - [x] Pull Google Business Profile reviews for Gilliam Lard
 - [x] Research what makes websites attractive to home buyers
-- [ ] Update App.tsx to light theme
-- [ ] Rewrite index.css: warm cream palette, maroon accent, halation glow utilities, classy professional
-- [ ] Rewrite Hero: bright, warm, halation glow behind headshot, updated SMS pre-made text copy
-- [ ] Rewrite Navbar: light/cream glassmorphism, classy professional
-- [ ] Rewrite Marquee: warm elegant version
-- [ ] Rewrite About: bright background, warm tones
-- [ ] Rewrite Difference: keep "not your typical agent" + pillars, bright elegant cards
-- [ ] Rewrite ServiceAreas: fix font sizing in cards, keep proudly serving
-- [ ] Add Reviews section with Google Business reviews
-- [ ] Rewrite Contact: keep the CTA style but bright theme, add pre-made text copy above button
-- [ ] Rewrite Footer: bright theme, professional
-- [ ] Update FloatingCTA: bright theme
-- [ ] Add classy, professional, not dated feel throughout
-- [ ] Add halation/warm glow effects throughout
+- [x] Update App.tsx to light theme
+- [x] Rewrite index.css: warm cream palette, maroon accent, halation glow utilities, classy professional
+- [x] Rewrite Hero: bright, warm, halation glow behind headshot, updated SMS pre-made text copy
+- [x] Rewrite Navbar: light/cream glassmorphism, classy professional
+- [x] Rewrite Marquee: warm elegant version
+- [x] Rewrite About: bright background, warm tones
+- [x] Rewrite Difference: keep "not your typical agent" + pillars, bright elegant cards
+- [x] Rewrite ServiceAreas: fix font sizing in cards, keep proudly serving
+- [x] Add Reviews section with Google Business reviews
+- [x] Rewrite Contact: keep the CTA style but bright theme
+- [x] Rewrite Footer: bright theme, professional
+- [x] Update FloatingCTA: bright theme
+- [x] Add classy, professional, not dated feel throughout
+- [x] Add halation/warm glow effects throughout
+- [x] Update SMS pre-filled text to personal message
+- [x] Move reviews section above Difference (social proof first)
+- [x] Convert reviews to revolving carousel with auto-advance
+- [x] Change font to Playfair Display (elegant serif)
+- [x] Add lead capture form at bottom that emails to glard.agent@gmail.com
+- [x] Upgrade to full-stack (server + db) for lead form backend
+- [x] Create leads database table
+- [x] Write vitest tests for lead submission
+- [x] Make it classy, professional, not dated

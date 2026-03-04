@@ -57,7 +57,7 @@
   --color-gold-soft: oklch(0.82 0.08 75);
 
   /* Fonts */
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'DM Sans', sans-serif;
 }
 
