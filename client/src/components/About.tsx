@@ -1,8 +1,8 @@
 /**
  * About — Brief personal introduction
- * Design: Dark section with section number watermark
- * Asymmetric layout with text and Virginia home image
- * Scroll-triggered animations
+ * Design: Bright cream background, warm halation accents
+ * Asymmetric layout with Virginia home image
+ * Classy, professional, inviting
  */
 
 import { motion, useInView } from "framer-motion";
@@ -27,7 +27,7 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" ref={ref} className="relative py-24 sm:py-32 lg:py-40 grain-overlay overflow-hidden">
+    <section id="about" ref={ref} className="relative py-24 sm:py-32 lg:py-40 overflow-hidden halation-ambient">
       <span className="section-number">01</span>
 
       <div className="container relative z-10">
@@ -40,13 +40,14 @@ export default function About() {
             animate={isInView ? "visible" : "hidden"}
             className="lg:col-span-5"
           >
-            <div className="relative">
+            <div className="relative halation">
               <img
                 src={VIRGINIA_HOME}
                 alt="Beautiful Virginia home"
-                className="w-full aspect-[4/5] object-cover rounded-xl sm:rounded-2xl"
+                className="relative z-10 w-full aspect-[4/5] object-cover rounded-xl sm:rounded-2xl shadow-xl shadow-charcoal/8"
               />
-              <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              {/* Warm overlay at bottom */}
+              <div className="absolute inset-0 z-20 rounded-xl sm:rounded-2xl bg-gradient-to-t from-charcoal/20 via-transparent to-transparent pointer-events-none" />
             </div>
           </motion.div>
 
@@ -59,7 +60,7 @@ export default function About() {
               animate={isInView ? "visible" : "hidden"}
               className="mb-4"
             >
-              <span className="font-display text-xs tracking-[0.3em] uppercase text-maroon">
+              <span className="font-display text-xs tracking-[0.25em] uppercase text-maroon font-medium">
                 About Gilliam
               </span>
             </motion.div>
@@ -69,7 +70,7 @@ export default function About() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-white mb-6 sm:mb-8"
+              className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-charcoal mb-6 sm:mb-8"
             >
               Built on
               <br />
@@ -81,7 +82,7 @@ export default function About() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="space-y-5 text-off-white/70 text-base sm:text-lg leading-relaxed max-w-xl"
+              className="space-y-5 text-slate text-base sm:text-lg leading-relaxed max-w-xl"
             >
               <p>
                 Real estate isn't just about properties — it's about people. As a young advisor
@@ -105,8 +106,10 @@ export default function About() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="mt-8 sm:mt-10 w-16 h-0.5 bg-maroon"
-            />
+              className="mt-8 sm:mt-10"
+            >
+              <div className="divider-elegant" />
+            </motion.div>
           </div>
         </div>
       </div>

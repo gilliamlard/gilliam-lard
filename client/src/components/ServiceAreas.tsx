@@ -1,7 +1,8 @@
 /**
  * ServiceAreas — New River Valley & Roanoke Valley
- * Design: Full-bleed image cards with overlay text
- * Scroll-triggered reveals
+ * Design: Bright theme, image cards with proper font sizing
+ * Keep "Proudly serving Virginia" heading
+ * Fix: font in cards was too big and cut off
  */
 
 import { motion, useInView } from "framer-motion";
@@ -41,7 +42,7 @@ export default function ServiceAreas() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32 lg:py-40 grain-overlay overflow-hidden">
+    <section ref={ref} className="relative py-24 sm:py-32 lg:py-40 overflow-hidden halation-ambient">
       <span className="section-number">03</span>
 
       <div className="container relative z-10">
@@ -52,7 +53,7 @@ export default function ServiceAreas() {
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-display text-xs tracking-[0.3em] uppercase text-maroon block mb-4"
+            className="font-display text-xs tracking-[0.25em] uppercase text-maroon font-medium block mb-4"
           >
             Service Areas
           </motion.span>
@@ -61,7 +62,7 @@ export default function ServiceAreas() {
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-white"
+            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-charcoal"
           >
             Proudly serving
             <br />
@@ -69,8 +70,8 @@ export default function ServiceAreas() {
           </motion.h2>
         </div>
 
-        {/* Area cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        {/* Area cards — FIXED font sizing */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
           {AREAS.map((area, i) => (
             <motion.div
               key={area.name}
@@ -78,28 +79,28 @@ export default function ServiceAreas() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="group relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[4/3] sm:aspect-[16/10]"
+              className="group relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[4/3] shadow-xl shadow-charcoal/8"
             >
               <img
                 src={area.image}
                 alt={area.name}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              {/* Gradient overlay — warm */}
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/20 to-transparent" />
 
-              {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                  <MapPin className="w-4 h-4 text-maroon" />
-                  <span className="font-display text-xs tracking-[0.2em] uppercase text-maroon">
+              {/* Content — properly sized fonts */}
+              <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-7">
+                <div className="flex items-center gap-2 mb-2">
+                  <MapPin className="w-3.5 h-3.5 text-gold" />
+                  <span className="font-display text-[10px] sm:text-xs tracking-[0.2em] uppercase text-gold-soft">
                     Virginia
                   </span>
                 </div>
-                <h3 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl text-white mb-2 sm:mb-3">
+                <h3 className="font-display font-bold text-xl sm:text-2xl md:text-3xl text-white mb-1.5 sm:mb-2">
                   {area.name}
                 </h3>
-                <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-md">
+                <p className="text-white/75 text-xs sm:text-sm leading-relaxed max-w-sm">
                   {area.description}
                 </p>
               </div>

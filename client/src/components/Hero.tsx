@@ -1,9 +1,8 @@
 /**
- * Hero — Full-viewport section
- * Design: Split layout on desktop (text left, headshot right)
- * Stacked on mobile (headshot top, text below)
- * Large bold typography, prominent SMS CTA button
- * Staggered clip-path text reveals
+ * Hero — Full-viewport, bright & elegant
+ * Design: Warm cream bg, halation glow behind headshot,
+ * bold typography, prominent SMS CTA with personal copy
+ * Classy, professional, inviting
  */
 
 import { motion } from "framer-motion";
@@ -19,16 +18,16 @@ const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const containerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
   },
 };
 
 const lineVariants: Variants = {
-  hidden: { y: "100%", opacity: 0 },
+  hidden: { y: "110%", opacity: 0 },
   visible: {
     y: "0%",
     opacity: 1,
-    transition: { duration: 0.7, ease: easeOut },
+    transition: { duration: 0.8, ease: easeOut },
   },
 };
 
@@ -43,12 +42,29 @@ const fadeUp: Variants = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 sm:pt-0 grain-overlay">
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-charcoal/30" />
+    <section className="relative min-h-screen flex items-center pt-20 sm:pt-0 overflow-hidden">
+      {/* Warm halation background glows */}
+      <div className="absolute top-0 right-0 w-[70%] h-[80%] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at 70% 30%, oklch(0.55 0.14 18 / 0.08) 0%, oklch(0.70 0.10 50 / 0.04) 40%, transparent 70%)",
+            filter: "blur(80px)",
+          }}
+        />
+      </div>
+      <div className="absolute bottom-0 left-0 w-[50%] h-[50%] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at 30% 70%, oklch(0.80 0.10 75 / 0.06) 0%, transparent 60%)",
+            filter: "blur(80px)",
+          }}
+        />
+      </div>
 
       <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-screen py-20 lg:py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-24 lg:py-0">
           {/* Text Content — Left side */}
           <motion.div
             variants={containerVariants}
@@ -57,17 +73,17 @@ export default function Hero() {
             className="order-2 lg:order-1 text-center lg:text-left"
           >
             {/* Subtitle */}
-            <motion.div variants={fadeUp} className="mb-4 sm:mb-6">
-              <span className="font-display text-xs sm:text-sm tracking-[0.3em] uppercase text-warm-gray">
+            <motion.div variants={fadeUp} className="mb-4 sm:mb-5">
+              <span className="font-display text-xs sm:text-sm tracking-[0.25em] uppercase text-maroon font-medium">
                 Real Estate Advisor
               </span>
             </motion.div>
 
             {/* Name — oversized stacked text */}
-            <div className="overflow-hidden mb-2">
+            <div className="overflow-hidden mb-1">
               <motion.h1
                 variants={lineVariants}
-                className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[7.5rem] leading-[0.9] tracking-tight text-white"
+                className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-charcoal"
               >
                 GILLIAM
               </motion.h1>
@@ -75,7 +91,7 @@ export default function Hero() {
             <div className="overflow-hidden mb-6 sm:mb-8">
               <motion.h1
                 variants={lineVariants}
-                className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[6.5rem] xl:text-[7.5rem] leading-[0.9] tracking-tight text-maroon"
+                className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-maroon"
               >
                 LARD
               </motion.h1>
@@ -84,27 +100,37 @@ export default function Hero() {
             {/* Tagline */}
             <motion.p
               variants={fadeUp}
-              className="text-lg sm:text-xl md:text-2xl text-off-white/80 font-light mb-8 sm:mb-10 max-w-md mx-auto lg:mx-0"
+              className="text-lg sm:text-xl md:text-2xl text-slate font-light mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0 italic"
+              style={{ fontFamily: "var(--font-body)" }}
             >
               Faithful service for your future.
+            </motion.p>
+
+            {/* Personal message above CTA */}
+            <motion.p
+              variants={fadeUp}
+              className="text-sm sm:text-base text-warm-gray leading-relaxed mb-5 max-w-md mx-auto lg:mx-0"
+              style={{ fontFamily: "var(--font-body)" }}
+            >
+              Hey, thank you for taking the time to reach out. I've made this super easy with a pre-made text — all you do is click send and I'll get back to you as soon as I can! Have a blessed rest of your day.
             </motion.p>
 
             {/* Primary CTA — SMS Button */}
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
               <a
                 href={SMS_LINK}
-                className="group flex items-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 sm:px-10 sm:py-5 rounded-full transition-all duration-300 hover:scale-105 animate-pulse-maroon"
+                className="group flex items-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 sm:px-10 sm:py-5 rounded-full transition-all duration-300 hover:scale-[1.03] animate-pulse-glow shadow-lg shadow-maroon/15"
               >
                 <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                 Text Me Now
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
               <div className="flex items-center gap-4 text-warm-gray text-sm">
-                <a href="tel:5402099772" className="hover:text-white transition-colors duration-300 font-display tracking-wide">
+                <a href="tel:5402099772" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide">
                   Call
                 </a>
-                <span className="text-white/20">|</span>
-                <a href="mailto:glard.agent@gmail.com" className="hover:text-white transition-colors duration-300 font-display tracking-wide">
+                <span className="text-charcoal/15">|</span>
+                <a href="mailto:glard.agent@gmail.com" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide">
                   Email
                 </a>
               </div>
@@ -113,29 +139,27 @@ export default function Hero() {
             {/* Brokerage tag */}
             <motion.p
               variants={fadeUp}
-              className="mt-8 sm:mt-12 text-xs text-warm-gray/60 font-display tracking-wider uppercase"
+              className="mt-8 sm:mt-10 text-xs text-warm-gray-light font-display tracking-wider uppercase"
             >
               Berkshire Hathaway HomeServices
             </motion.p>
           </motion.div>
 
-          {/* Headshot — Right side */}
+          {/* Headshot — Right side with halation glow */}
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: easeOut, delay: 0.2 }}
+            transition={{ duration: 1, ease: easeOut, delay: 0.15 }}
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
-            <div className="relative">
-              {/* Maroon glow behind headshot */}
-              <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-maroon/20 blur-3xl scale-90" />
+            <div className="relative halation-portrait">
               <img
                 src={HEADSHOT_URL}
                 alt="Gilliam Lard — Real Estate Advisor"
-                className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] object-cover object-top rounded-2xl sm:rounded-3xl shadow-2xl"
+                className="relative z-10 w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[26rem] lg:h-[26rem] xl:w-[30rem] xl:h-[30rem] object-cover object-top rounded-2xl sm:rounded-3xl shadow-2xl shadow-charcoal/10"
               />
-              {/* Decorative maroon border accent */}
-              <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 w-full h-full rounded-2xl sm:rounded-3xl border-2 border-maroon/30" />
+              {/* Decorative border accent */}
+              <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 w-full h-full rounded-2xl sm:rounded-3xl border-2 border-maroon/15 z-0" />
             </div>
           </motion.div>
         </div>
@@ -148,11 +172,11 @@ export default function Hero() {
         transition={{ delay: 1.5, duration: 0.8 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs font-display tracking-[0.2em] uppercase text-warm-gray/50">Scroll</span>
+        <span className="text-xs font-display tracking-[0.2em] uppercase text-warm-gray-light">Scroll</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-warm-gray/50 to-transparent"
+          className="w-px h-8 bg-gradient-to-b from-warm-gray-light to-transparent"
         />
       </motion.div>
     </section>
