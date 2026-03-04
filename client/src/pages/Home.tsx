@@ -13,8 +13,7 @@ import About from "@/components/About";
 import Reviews from "@/components/Reviews";
 import Difference from "@/components/Difference";
 import ServiceAreas from "@/components/ServiceAreas";
-import Contact from "@/components/Contact";
-import LeadForm from "@/components/LeadForm";
+import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 
@@ -28,8 +27,7 @@ export default function Home() {
       <Reviews />
       <Difference />
       <ServiceAreas />
-      <Contact />
-      <LeadForm />
+      <ContactSection />
       <Footer />
       <FloatingCTA />
     </div>
