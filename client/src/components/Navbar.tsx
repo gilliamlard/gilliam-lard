@@ -73,6 +73,12 @@ export default function Navbar() {
             Reviews
           </a>
           <a
+            href="/listings"
+            className="hidden md:block text-sm text-slate hover:text-charcoal transition-colors duration-300 font-body"
+          >
+            Search Homes
+          </a>
+          <a
             href="https://www.instagram.com/gilliamlard/"
             target="_blank"
             rel="noopener noreferrer"
