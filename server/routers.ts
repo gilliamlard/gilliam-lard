@@ -6,6 +6,7 @@ import { notifyOwner } from "./_core/notification";
 import { z } from "zod";
 import { getDb } from "./db";
 import { leads } from "../drizzle/schema";
+import { scrapeListings } from "./listings";
 
 export const appRouter = router({
   system: systemRouter,
@@ -72,6 +73,12 @@ export const appRouter = router({
 
         return { success: true } as const;
       }),
+  }),
+
+  listings: router({
+    search: publicProcedure.query(async () => {
+      return scrapeListings();
+    }),
   }),
 });
 
