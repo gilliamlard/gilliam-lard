@@ -1,30 +1,24 @@
 /**
- * About — Editorial / Magazine
- * Design moves:
- *  - Chapter mark instead of "01"
- *  - Bigger Playfair display heading with italic accent word
- *  - Italic serif pull-quote moment ("…relationships that feel like friendships.")
- *  - Asymmetric 12-col layout with image left, narrative right
- *  - Slower reveals (editorial pacing)
- *
- * Content unchanged.
+ * About — Brief personal introduction
+ * Design: Bright cream background, warm halation accents
+ * Asymmetric layout with Virginia home image
+ * Classy, professional, inviting
  */
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import type { Variants } from "framer-motion";
 
-const VIRGINIA_HOME =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663388409088/U9NrqBKRzTeVrcCo656SAy/virginia-home-GxJUKy2f5jv6kAJubZU9jj.webp";
+const VIRGINIA_HOME = "https://d2xsxph8kpxj0f.cloudfront.net/310519663388409088/U9NrqBKRzTeVrcCo656SAy/virginia-home-GxJUKy2f5jv6kAJubZU9jj.webp";
 
-const editorialEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const fadeUp: Variants = {
-  hidden: { y: 48, opacity: 0 },
+  hidden: { y: 40, opacity: 0 },
   visible: (delay: number) => ({
     y: 0,
     opacity: 1,
-    transition: { duration: 1.0, ease: editorialEase, delay },
+    transition: { duration: 0.7, ease: easeOut, delay },
   }),
 };
 
@@ -33,73 +27,42 @@ export default function About() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section
-      id="about"
-      ref={ref}
-      className="relative py-28 sm:py-36 lg:py-44 overflow-hidden"
-    >
-      {/* Subtle breathing atmosphere */}
-      <div
-        className="atmosphere"
-        style={{
-          top: "-10%",
-          right: "-10%",
-          width: "50%",
-          height: "60%",
-          background:
-            "radial-gradient(circle, oklch(0.60 0.12 18 / 0.06) 0%, transparent 65%)",
-          animationDelay: "-3s",
-        }}
-      />
+    <section id="about" ref={ref} className="relative py-24 sm:py-32 lg:py-40 overflow-hidden halation-ambient">
+      <span className="section-number">01</span>
 
       <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-          {/* Image — Left (5 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Image — Left */}
           <motion.div
             custom={0}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="lg:col-span-5 lg:sticky lg:top-32"
+            className="lg:col-span-5"
           >
-            <div className="relative overflow-hidden rounded-sm shadow-2xl shadow-charcoal/12">
+            <div className="relative halation">
               <img
                 src={VIRGINIA_HOME}
-                alt="A Virginia home at dusk"
-                className="ken-burns relative z-10 w-full aspect-[4/5] object-cover"
+                alt="Beautiful Virginia home"
+                className="relative z-10 w-full aspect-[4/5] object-cover rounded-xl sm:rounded-2xl shadow-xl shadow-charcoal/8"
               />
-              {/* Warm film grade */}
-              <div
-                className="absolute inset-0 z-20 pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(180deg, transparent 0%, transparent 55%, oklch(0.22 0.008 260 / 0.35) 100%), radial-gradient(ellipse at 30% 20%, oklch(0.85 0.08 60 / 0.08) 0%, transparent 60%)",
-                }}
-              />
+              {/* Warm overlay at bottom */}
+              <div className="absolute inset-0 z-20 rounded-xl sm:rounded-2xl bg-gradient-to-t from-charcoal/20 via-transparent to-transparent pointer-events-none" />
             </div>
-
-            {/* Caption beneath image */}
-            <motion.p
-              custom={0.25}
-              variants={fadeUp}
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              className="mt-4 display-italic text-sm text-warm-gray-light tracking-wide"
-            >
-              — Home, somewhere in the Valley.
-            </motion.p>
           </motion.div>
 
-          {/* Text — Right (7 cols) */}
-          <div className="lg:col-span-7">
+          {/* Text — Right */}
+          <div className="lg:col-span-7 lg:pl-8">
             <motion.div
               custom={0.1}
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="mb-7"
+              className="mb-4"
             >
-              <span className="chapter-mark">Chapter One — About Gilliam</span>
+              <span className="font-display text-xs tracking-[0.25em] uppercase text-maroon font-medium">
+                About Gilliam
+              </span>
             </motion.div>
 
             <motion.h2
@@ -107,10 +70,11 @@ export default function About() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="display-headline text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6rem] text-charcoal mb-10 sm:mb-12"
+              className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-charcoal mb-6 sm:mb-8"
             >
-              Built on{" "}
-              <span className="display-italic text-maroon">relationships.</span>
+              Built on
+              <br />
+              <span className="text-maroon">relationships.</span>
             </motion.h2>
 
             <motion.div
@@ -118,42 +82,34 @@ export default function About() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="space-y-6 text-slate text-lg sm:text-xl leading-[1.65] max-w-xl"
-              style={{ fontFamily: "var(--font-body)" }}
+              className="space-y-5 text-slate text-base sm:text-lg leading-relaxed max-w-xl"
             >
               <p>
-                Real estate isn&apos;t just about properties — it&apos;s about people. As a
-                young advisor serving the New River Valley and Roanoke Valley, I bring a
-                fresh perspective grounded in genuine care for every client I work with.
+                Real estate isn't just about properties — it's about people. As a young advisor
+                serving the New River Valley and Roanoke Valley, I bring a fresh perspective
+                grounded in genuine care for every client I work with.
               </p>
               <p>
-                My approach is simple: listen first, serve always. Whether you&apos;re
-                buying your first home, relocating to Virginia, or investing in the
-                region&apos;s growing market, I&apos;m here to walk alongside you through
-                every step of the journey.
+                My approach is simple: listen first, serve always. Whether you're buying your
+                first home, relocating to Virginia, or investing in the region's growing market,
+                I'm here to walk alongside you through every step of the journey.
               </p>
               <p>
-                Guided by faith and driven by a passion for helping others, I believe that
-                the best business relationships are the ones that feel like friendships.
+                Guided by faith and driven by a passion for helping others, I believe that the
+                best business relationships are the ones that feel like friendships.
               </p>
             </motion.div>
 
-            {/* Pull-quote moment — editorial signature line */}
-            <motion.figure
+            {/* Accent line */}
+            <motion.div
               custom={0.5}
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="relative mt-14 sm:mt-16 pl-8 sm:pl-12 pr-2 max-w-xl pull-quote"
+              className="mt-8 sm:mt-10"
             >
-              <blockquote className="relative z-10 display-italic text-2xl sm:text-3xl lg:text-[2rem] leading-[1.25] text-charcoal">
-                The best business relationships are the ones that feel like friendships.
-              </blockquote>
-              <figcaption className="relative z-10 mt-4 flex items-center gap-3 text-warm-gray">
-                <span className="block w-6 h-px bg-maroon/60" />
-                <span className="display-italic text-sm tracking-wide">Gilliam</span>
-              </figcaption>
-            </motion.figure>
+              <div className="divider-elegant" />
+            </motion.div>
           </div>
         </div>
       </div>

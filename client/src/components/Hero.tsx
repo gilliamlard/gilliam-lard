@@ -1,14 +1,8 @@
 /**
- * Hero — Editorial / Magazine-cover
- * Design moves:
- *  - Full-bleed editorial portrait on the right (no rounded card frame)
- *  - Oversized Playfair name treated like a magazine masthead
- *  - Italic serif tagline with drawn-in gold underline accent
- *  - Giant "G" monogram watermark behind the portrait
- *  - Breathing atmospheric gradient (very Linear.app)
- *  - Slower, more deliberate motion timing
- *
- * NOTE: Content + SMS link unchanged.
+ * Hero — Full-viewport, bright & elegant
+ * Design: Warm cream bg, halation glow behind headshot,
+ * bold typography, prominent SMS CTA with personal copy
+ * Classy, professional, inviting
  */
 
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -20,30 +14,30 @@ const SMS_LINK = "sms:5402099772?body=Hey%2C%20thank%20you%20for%20taking%20the%
 
 const HEADSHOT_URL = "https://private-us-east-1.manuscdn.com/user_upload_by_module/session_file/310519663388409088/NeWQjnDzLkLYOWDD.JPEG?Expires=1804191409&Signature=TjEbHf~5JmWCwGIl1qCb5W9s28gvkqS8NJe5o-CAxsim~8Mv-SKP2CyNeO~xF8DtyTRFvMRLGPEOln53KF3ip5DIoNbgcvKy5EjNyOHd3Iohcw9NA379D8Wpn0Qi3uqX2GvfiFSbzuB7yxuMq4UGSWiYy5vfb5m-cBqzMgqJOOGzcuCRCShNs3l7x~71yp3mbXcmtxkEHHW8BfNq1jO~3xaaC3sDdH6tCZ0kFNLJhgkyErvCmm2e-bOqb97qAP5GfJB9qKTnJ2Vc1YMi78FRW~nFDxNdaZBRP~LVUsrEPpFhZqpJ9PCCrcOGGhlJw4Su9iPsEfdhXh9MGwtFkDxXiA__&Key-Pair-Id=K2HSFNDJXOU9YS";
 
-const editorialEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const containerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.15 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
   },
 };
 
-const lineRise: Variants = {
+const lineVariants: Variants = {
   hidden: { y: "110%", opacity: 0 },
   visible: {
     y: "0%",
     opacity: 1,
-    transition: { duration: 1.05, ease: editorialEase },
+    transition: { duration: 0.8, ease: easeOut },
   },
 };
 
-const softRise: Variants = {
-  hidden: { y: 28, opacity: 0 },
+const fadeUp: Variants = {
+  hidden: { y: 30, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.95, ease: editorialEase },
+    transition: { duration: 0.7, ease: easeOut },
   },
 };
 
@@ -53,11 +47,12 @@ export default function Hero() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const rawPortraitY = useTransform(scrollYProgress, [0, 1], [0, -70]);
-  const rawTextY = useTransform(scrollYProgress, [0, 1], [0, 50]);
-  const rawTextOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const rawPortraitY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const rawTextY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const rawTextOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  // Scroll parallax only on desktop (touch devices skip it for a snappier feel).
+  // Only enable scroll parallax on devices with fine pointers (desktop).
+  // Touch devices skip the transforms entirely for a snappier feel.
   const [parallaxOn, setParallaxOn] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(pointer: fine) and (min-width: 1024px)");
@@ -72,195 +67,134 @@ export default function Hero() {
   const textOpacity = parallaxOn ? rawTextOpacity : 1;
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-[100svh] flex items-center pt-24 lg:pt-0 overflow-hidden"
-    >
-      {/* Atmospheric breathing gradient — Linear-style */}
-      <div
-        className="atmosphere"
-        style={{
-          top: "-15%",
-          right: "-10%",
-          width: "65%",
-          height: "85%",
-          background:
-            "radial-gradient(ellipse at 60% 35%, oklch(0.55 0.14 18 / 0.18) 0%, oklch(0.65 0.10 40 / 0.08) 38%, transparent 70%)",
-        }}
-      />
-      <div
-        className="atmosphere"
-        style={{
-          bottom: "-15%",
-          left: "-10%",
-          width: "55%",
-          height: "60%",
-          background:
-            "radial-gradient(ellipse at 35% 70%, oklch(0.80 0.10 75 / 0.12) 0%, transparent 65%)",
-          animationDelay: "-7s",
-        }}
-      />
-
-      {/* Giant "G" monogram watermark — visible behind the portrait */}
-      <div
-        aria-hidden="true"
-        className="monogram absolute hidden lg:block"
-        style={{
-          right: "-3vw",
-          top: "50%",
-          transform: "translateY(-50%)",
-          fontSize: "min(48vw, 56rem)",
-        }}
-      >
-        G
+    <section ref={sectionRef} className="relative min-h-screen flex items-center pt-20 sm:pt-0 overflow-hidden">
+      {/* Warm halation background glows */}
+      <div className="absolute top-0 right-0 w-[70%] h-[80%] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at 70% 30%, oklch(0.55 0.14 18 / 0.08) 0%, oklch(0.70 0.10 50 / 0.04) 40%, transparent 70%)",
+            filter: "blur(80px)",
+          }}
+        />
+      </div>
+      <div className="absolute bottom-0 left-0 w-[50%] h-[50%] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at 30% 70%, oklch(0.80 0.10 75 / 0.06) 0%, transparent 60%)",
+            filter: "blur(80px)",
+          }}
+        />
       </div>
 
-      <div className="container relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center min-h-[100svh] py-20 lg:py-0">
-          {/* TEXT — Left (7 cols) */}
+      <div className="container relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen py-24 lg:py-0">
+          {/* Text Content — Left side */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             style={{ y: textY, opacity: textOpacity }}
-            className="order-2 lg:order-1 lg:col-span-7 text-center lg:text-left"
+            className="order-2 lg:order-1 text-center lg:text-left"
           >
-            {/* Chapter mark */}
-            <motion.div variants={softRise} className="mb-7 sm:mb-9 inline-flex">
-              <span className="chapter-mark">Real Estate Advisor</span>
+            {/* Subtitle */}
+            <motion.div variants={fadeUp} className="mb-4 sm:mb-5">
+              <span className="font-display text-xs sm:text-sm tracking-[0.25em] uppercase text-maroon font-medium">
+                Real Estate Advisor
+              </span>
             </motion.div>
 
-            {/* Name — masthead scale */}
-            <div className="overflow-hidden mb-0 sm:mb-1">
+            {/* Name — oversized stacked text */}
+            <div className="overflow-hidden mb-1">
               <motion.h1
-                variants={lineRise}
-                className="display-headline text-[18vw] sm:text-[14vw] md:text-[12vw] lg:text-[10.5vw] xl:text-[10vw] leading-[0.9] text-charcoal"
+                variants={lineVariants}
+                className="font-display font-bold text-6xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-charcoal"
               >
-                Gilliam
+                GILLIAM
               </motion.h1>
             </div>
-            <div className="overflow-hidden mb-8 sm:mb-10">
+            <div className="overflow-hidden mb-6 sm:mb-8">
               <motion.h1
-                variants={lineRise}
-                className="display-italic text-maroon text-[18vw] sm:text-[14vw] md:text-[12vw] lg:text-[10.5vw] xl:text-[10vw] leading-[0.9]"
+                variants={lineVariants}
+                className="font-display font-bold text-6xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-maroon"
               >
-                Lard
+                LARD
               </motion.h1>
             </div>
 
-            {/* Italic tagline with drawn-in gold underline */}
+            {/* Tagline */}
             <motion.p
-              variants={softRise}
-              className="display-italic text-2xl sm:text-3xl md:text-[2rem] text-slate font-normal mb-10 sm:mb-12 max-w-xl mx-auto lg:mx-0"
+              variants={fadeUp}
+              className="text-lg sm:text-xl md:text-2xl text-slate font-light mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0 italic"
+              style={{ fontFamily: "var(--font-body)" }}
             >
-              Faithful service for{" "}
-              <span className="gold-underline text-charcoal">your future</span>.
+              Faithful service for your future.
             </motion.p>
 
-            {/* Primary CTA + secondary links */}
-            <motion.div
-              variants={softRise}
-              className="flex flex-col sm:flex-row items-center lg:items-start gap-5"
-            >
+            {/* Primary CTA — SMS Button */}
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
               <a
                 href={SMS_LINK}
-                className="group inline-flex items-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-9 py-4 sm:px-11 sm:py-5 rounded-full transition-all duration-500 hover:scale-[1.03] active:scale-[0.98] animate-pulse-glow shadow-lg shadow-maroon/15"
+                className="group flex items-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 sm:px-10 sm:py-5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] animate-pulse-glow shadow-lg shadow-maroon/15"
               >
                 <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                 Text Me Now
-                <ArrowRight className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
               <div className="flex items-center gap-2 text-warm-gray text-sm">
-                <a
-                  href="tel:5402099772"
-                  className="hover:text-charcoal transition-colors duration-500 font-display italic tracking-wide px-3 py-2"
-                >
+                <a href="tel:5402099772" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide px-3 py-2">
                   Call
                 </a>
-                <span className="text-charcoal/15">·</span>
-                <a
-                  href="mailto:glard.agent@gmail.com"
-                  className="hover:text-charcoal transition-colors duration-500 font-display italic tracking-wide px-3 py-2"
-                >
+                <span className="text-charcoal/15">|</span>
+                <a href="mailto:glard.agent@gmail.com" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide px-3 py-2">
                   Email
                 </a>
               </div>
             </motion.div>
 
-            {/* Brokerage micro-tag */}
+            {/* Brokerage tag */}
             <motion.p
-              variants={softRise}
-              className="mt-12 sm:mt-14 text-[0.7rem] sm:text-xs text-warm-gray-light font-display tracking-[0.32em] uppercase"
+              variants={fadeUp}
+              className="mt-8 sm:mt-10 text-xs text-warm-gray-light font-display tracking-wider uppercase"
             >
-              Berkshire Hathaway HomeServices · Mountain Sky Properties
+              Berkshire Hathaway HomeServices
             </motion.p>
           </motion.div>
 
-          {/* PORTRAIT — Right (5 cols), full-bleed editorial */}
+          {/* Headshot — Right side with halation glow */}
           <motion.div
+            initial={{ scale: 0.92, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: easeOut, delay: 0.15 }}
             style={{ y: portraitY }}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: editorialEase, delay: 0.1 }}
-            className="order-1 lg:order-2 lg:col-span-5 relative w-full lg:w-auto lg:absolute lg:right-0 lg:top-0 lg:h-full"
+            className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
-            {/* Mobile / tablet: contained portrait. Desktop: full-bleed to right edge. */}
-            <div className="relative w-full mx-auto max-w-md lg:max-w-none lg:h-full">
-              {/* Soft halation behind portrait */}
-              <div
-                className="absolute inset-0 lg:inset-x-0 lg:-inset-y-10 pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at 50% 40%, oklch(0.55 0.14 18 / 0.20) 0%, oklch(0.70 0.10 50 / 0.10) 40%, transparent 70%)",
-                  filter: "blur(60px)",
-                }}
-              />
-
-              {/* On desktop the image fills the right column edge-to-edge.
-                  On mobile/tablet it's a tall portrait card. */}
+            <div className="relative halation-portrait animate-float-soft">
               <img
                 src={HEADSHOT_URL}
                 alt="Gilliam Lard — Real Estate Advisor"
-                className="
-                  relative z-10
-                  w-full
-                  aspect-[3/4] lg:aspect-auto lg:h-screen lg:max-h-screen
-                  object-cover object-top
-                  rounded-2xl sm:rounded-3xl lg:rounded-none
-                  shadow-2xl shadow-charcoal/15 lg:shadow-none
-                "
+                className="relative z-10 w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-[26rem] lg:h-[26rem] xl:w-[30rem] xl:h-[30rem] object-cover object-top rounded-2xl sm:rounded-3xl shadow-2xl shadow-charcoal/10"
               />
-
-              {/* Subtle warm gradient overlay on portrait — film color grade */}
-              <div
-                className="absolute inset-0 z-20 pointer-events-none rounded-2xl sm:rounded-3xl lg:rounded-none"
-                style={{
-                  background:
-                    "linear-gradient(180deg, transparent 0%, transparent 55%, oklch(0.30 0.05 30 / 0.10) 100%), radial-gradient(ellipse at 30% 20%, oklch(0.85 0.08 60 / 0.10) 0%, transparent 60%)",
-                }}
-              />
-
-              {/* Vertical hairline accent — magazine spine */}
-              <div className="hidden lg:block absolute left-0 top-12 bottom-12 w-px bg-gradient-to-b from-transparent via-charcoal/15 to-transparent z-30" />
+              {/* Decorative border accent */}
+              <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 w-full h-full rounded-2xl sm:rounded-3xl border-2 border-maroon/15 z-0" />
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Scroll cue — desktop only */}
+      {/* Scroll indicator — desktop only to avoid overlap with floating CTA on mobile */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 1.0 }}
-        className="hidden lg:flex absolute bottom-10 left-12 flex-col items-start gap-3 z-20"
+        transition={{ delay: 1.5, duration: 0.8 }}
+        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
       >
-        <span className="display-italic text-xs tracking-[0.3em] uppercase text-warm-gray-light">
-          Scroll
-        </span>
+        <span className="text-xs font-display tracking-[0.2em] uppercase text-warm-gray-light">Scroll</span>
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-10 bg-gradient-to-b from-warm-gray-light to-transparent"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-8 bg-gradient-to-b from-warm-gray-light to-transparent"
         />
       </motion.div>
     </section>
