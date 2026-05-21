@@ -24,7 +24,11 @@ export default function FloatingCTA() {
       initial={{ scale: 0, opacity: 0 }}
       animate={visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="fixed bottom-6 right-6 z-50 lg:hidden flex items-center gap-2 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-sm px-5 py-3.5 rounded-full shadow-xl shadow-maroon/25 animate-pulse-glow"
+      style={{
+        bottom: "max(1.5rem, env(safe-area-inset-bottom, 1.5rem))",
+        right: "max(1.5rem, env(safe-area-inset-right, 1.5rem))",
+      }}
+      className="fixed z-50 lg:hidden flex items-center gap-2 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-sm px-5 py-3.5 rounded-full shadow-xl shadow-maroon/25 animate-pulse-glow active:scale-[0.96] transition-transform"
     >
       <MessageCircle className="w-5 h-5" />
       Text Me

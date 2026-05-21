@@ -85,7 +85,7 @@ export default function ContactSection() {
   };
 
   const inputClasses =
-    "w-full bg-cream border border-charcoal/8 rounded-xl px-4 py-3.5 text-charcoal placeholder:text-warm-gray-light focus:outline-none focus:border-maroon/30 focus:ring-2 focus:ring-maroon/10 transition-all duration-300 text-sm sm:text-base";
+    "w-full bg-cream border border-charcoal/8 rounded-xl px-4 py-3.5 text-charcoal placeholder:text-warm-gray-light focus:outline-none focus:border-maroon/30 focus:ring-2 focus:ring-maroon/10 transition-all duration-300 text-base";
 
   return (
     <section
@@ -149,7 +149,7 @@ export default function ContactSection() {
             {/* Primary SMS CTA */}
             <a
               href={SMS_LINK}
-              className="group inline-flex items-center gap-3 sm:gap-4 bg-maroon hover:bg-maroon-light text-white font-display font-bold text-lg sm:text-xl px-10 py-5 sm:px-12 sm:py-5 rounded-full transition-all duration-300 hover:scale-[1.03] animate-pulse-glow shadow-xl shadow-maroon/20 mb-10 sm:mb-12"
+              className="group inline-flex items-center gap-3 sm:gap-4 bg-maroon hover:bg-maroon-light text-white font-display font-bold text-lg sm:text-xl px-10 py-5 sm:px-12 sm:py-5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] animate-pulse-glow shadow-xl shadow-maroon/20 mb-10 sm:mb-12"
             >
               <MessageCircle className="w-6 h-6" />
               Text Me Now
@@ -364,7 +364,7 @@ export default function ContactSection() {
                 <button
                   type="submit"
                   disabled={submitLead.isPending}
-                  className="w-full flex items-center justify-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.02] disabled:opacity-60 disabled:hover:scale-100 shadow-lg shadow-maroon/15"
+                  className="w-full flex items-center justify-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-60 disabled:hover:scale-100 shadow-lg shadow-maroon/15"
                 >
                   {submitLead.isPending ? (
                     <>

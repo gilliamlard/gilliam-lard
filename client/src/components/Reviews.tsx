@@ -197,7 +197,7 @@ export default function Reviews() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, ease: easeOut, delay: posIdx * 0.08 }}
-                  className="bg-warm-white rounded-2xl p-7 border border-charcoal/5 hover:border-maroon/10 hover:shadow-lg hover:shadow-maroon/5 transition-all duration-500"
+                  className="bg-warm-white rounded-2xl p-7 border border-charcoal/5 hover:border-maroon/15 hover:shadow-xl hover:shadow-maroon/10 lift-on-hover"
                 >
                   <StarRating count={REVIEWS[reviewIdx].rating} />
                   <p className="mt-5 text-slate text-sm lg:text-base leading-relaxed italic">

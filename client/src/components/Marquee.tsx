@@ -25,7 +25,7 @@ export default function Marquee() {
           background: "linear-gradient(90deg, oklch(0.45 0.15 18 / 0.3) 0%, transparent 20%, transparent 80%, oklch(0.45 0.15 18 / 0.3) 100%)",
         }}
       />
-      <div className="flex whitespace-nowrap animate-marquee">
+      <div className="flex whitespace-nowrap animate-marquee mask-edge-x">
         {repeatedItems.map((item, i) => (
           <span
             key={i}

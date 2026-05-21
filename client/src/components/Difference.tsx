@@ -111,11 +111,11 @@ export default function Difference() {
                 variants={cardVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}
-                className="group relative p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-warm-white border border-charcoal/5 hover:border-maroon/15 hover:shadow-lg hover:shadow-maroon/5 transition-all duration-500"
+                className="group relative p-6 sm:p-8 rounded-xl sm:rounded-2xl bg-warm-white border border-charcoal/5 hover:border-maroon/20 hover:shadow-xl hover:shadow-maroon/10 lift-on-hover"
               >
                 <div className="flex items-start gap-4 sm:gap-5">
-                  <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-maroon-soft flex items-center justify-center group-hover:bg-maroon/12 transition-colors duration-500">
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-maroon" />
+                  <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-maroon-soft flex items-center justify-center transition-all duration-500 group-hover:bg-maroon group-hover:rotate-[-4deg]">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-maroon transition-colors duration-500 group-hover:text-white" />
                   </div>
                   <div>
                     <h3 className="font-display font-semibold text-lg sm:text-xl text-charcoal mb-2 sm:mb-3">

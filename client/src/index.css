@@ -300,4 +300,108 @@ body {
   .star-filled {
     color: oklch(0.72 0.12 75);
   }
+
+  /* ========================================
+     CUSTOM CURSOR (desktop only)
+     ======================================== */
+  @media (pointer: fine) {
+    html,
+    body,
+    a,
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea,
+    label {
+      cursor: none;
+    }
+  }
+
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+  }
+
+  .custom-cursor-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: oklch(0.38 0.14 18);
+    transition: width 0.25s ease, height 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+    mix-blend-mode: multiply;
+  }
+  .custom-cursor-dot[data-hover="true"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  .custom-cursor-ring {
+    width: 26px;
+    height: 26px;
+    border-radius: 9999px;
+    border: 1.5px solid oklch(0.38 0.14 18 / 0.6);
+    transition:
+      width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s ease,
+      background 0.3s ease;
+    mix-blend-mode: multiply;
+  }
+  .custom-cursor-ring[data-hover="true"] {
+    width: 52px;
+    height: 52px;
+    border-color: oklch(0.38 0.14 18 / 0.9);
+    background: oklch(0.38 0.14 18 / 0.08);
+  }
+
+  /* ========================================
+     EDGE FADE MASKS
+     ======================================== */
+  .mask-edge-x {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+
+  /* ========================================
+     SUBTLE FLOAT (continuous gentle drift)
+     ======================================== */
+  @keyframes float-soft {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  .animate-float-soft {
+    animation: float-soft 7s ease-in-out infinite;
+  }
+
+  /* ========================================
+     LIFT-ON-HOVER UTILITY
+     ======================================== */
+  .lift-on-hover {
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.5s ease;
+  }
+  .lift-on-hover:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float-soft,
+    .animate-marquee,
+    .animate-pulse-glow {
+      animation: none !important;
+    }
+    .lift-on-hover:hover {
+      transform: none;
+    }
+  }
 }

@@ -5,8 +5,9 @@
  * Classy, professional, inviting
  */
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import type { Variants } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { MessageCircle, ArrowRight } from "lucide-react";
 
 const SMS_LINK = "sms:5402099772?body=Hey%2C%20thank%20you%20for%20taking%20the%20time%20to%20reach%20out.%20I%27ve%20made%20this%20super%20easy%20with%20a%20pre-made%20text%20%E2%80%94%20all%20you%20do%20is%20click%20send%20and%20I%27ll%20get%20back%20to%20you%20as%20soon%20as%20I%20can%21%20Have%20a%20blessed%20rest%20of%20your%20day.";
@@ -41,8 +42,32 @@ const fadeUp: Variants = {
 };
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const rawPortraitY = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const rawTextY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const rawTextOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  // Only enable scroll parallax on devices with fine pointers (desktop).
+  // Touch devices skip the transforms entirely for a snappier feel.
+  const [parallaxOn, setParallaxOn] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: fine) and (min-width: 1024px)");
+    setParallaxOn(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setParallaxOn(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const portraitY = parallaxOn ? rawPortraitY : 0;
+  const textY = parallaxOn ? rawTextY : 0;
+  const textOpacity = parallaxOn ? rawTextOpacity : 1;
+
   return (
-    <section className="relative min-h-screen flex items-center pt-20 sm:pt-0 overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-screen flex items-center pt-20 sm:pt-0 overflow-hidden">
       {/* Warm halation background glows */}
       <div className="absolute top-0 right-0 w-[70%] h-[80%] pointer-events-none">
         <div
@@ -70,6 +95,7 @@ export default function Hero() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            style={{ y: textY, opacity: textOpacity }}
             className="order-2 lg:order-1 text-center lg:text-left"
           >
             {/* Subtitle */}
@@ -83,7 +109,7 @@ export default function Hero() {
             <div className="overflow-hidden mb-1">
               <motion.h1
                 variants={lineVariants}
-                className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-charcoal"
+                className="font-display font-bold text-6xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-charcoal"
               >
                 GILLIAM
               </motion.h1>
@@ -91,7 +117,7 @@ export default function Hero() {
             <div className="overflow-hidden mb-6 sm:mb-8">
               <motion.h1
                 variants={lineVariants}
-                className="font-display font-bold text-5xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-maroon"
+                className="font-display font-bold text-6xl sm:text-7xl md:text-8xl lg:text-[6rem] xl:text-[7rem] leading-[0.92] tracking-tight text-maroon"
               >
                 LARD
               </motion.h1>
@@ -110,18 +136,18 @@ export default function Hero() {
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center lg:items-start gap-4">
               <a
                 href={SMS_LINK}
-                className="group flex items-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 sm:px-10 sm:py-5 rounded-full transition-all duration-300 hover:scale-[1.03] animate-pulse-glow shadow-lg shadow-maroon/15"
+                className="group flex items-center gap-3 bg-maroon hover:bg-maroon-light text-white font-display font-semibold text-base sm:text-lg px-8 py-4 sm:px-10 sm:py-5 rounded-full transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] animate-pulse-glow shadow-lg shadow-maroon/15"
               >
                 <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                 Text Me Now
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
-              <div className="flex items-center gap-4 text-warm-gray text-sm">
-                <a href="tel:5402099772" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide">
+              <div className="flex items-center gap-2 text-warm-gray text-sm">
+                <a href="tel:5402099772" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide px-3 py-2">
                   Call
                 </a>
                 <span className="text-charcoal/15">|</span>
-                <a href="mailto:glard.agent@gmail.com" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide">
+                <a href="mailto:glard.agent@gmail.com" className="hover:text-charcoal transition-colors duration-300 font-display tracking-wide px-3 py-2">
                   Email
                 </a>
               </div>
@@ -141,9 +167,10 @@ export default function Hero() {
             initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, ease: easeOut, delay: 0.15 }}
+            style={{ y: portraitY }}
             className="order-1 lg:order-2 flex justify-center lg:justify-end"
           >
-            <div className="relative halation-portrait">
+            <div className="relative halation-portrait animate-float-soft">
               <img
                 src={HEADSHOT_URL}
                 alt="Gilliam Lard — Real Estate Advisor"
@@ -156,12 +183,12 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — desktop only to avoid overlap with floating CTA on mobile */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
       >
         <span className="text-xs font-display tracking-[0.2em] uppercase text-warm-gray-light">Scroll</span>
         <motion.div

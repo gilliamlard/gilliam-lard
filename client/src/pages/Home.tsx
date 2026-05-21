@@ -16,6 +16,8 @@ import ServiceAreas from "@/components/ServiceAreas";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
+import GrainOverlay from "@/components/GrainOverlay";
+import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
   return (
@@ -30,6 +32,8 @@ export default function Home() {
       <ContactSection />
       <Footer />
       <FloatingCTA />
+      <GrainOverlay />
+      <CustomCursor />
     </div>
   );
 }

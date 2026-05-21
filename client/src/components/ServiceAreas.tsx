@@ -79,12 +79,12 @@ export default function ServiceAreas() {
               variants={fadeUp}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="group relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[4/3] shadow-xl shadow-charcoal/8"
+              className="group relative overflow-hidden rounded-xl sm:rounded-2xl aspect-[4/3] shadow-xl shadow-charcoal/8 lift-on-hover hover:shadow-2xl hover:shadow-charcoal/15"
             >
               <img
                 src={area.image}
                 alt={area.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.08]"
               />
               {/* Gradient overlay — warm */}
               <div className="absolute inset-0 bg-gradient-to-t from-charcoal/75 via-charcoal/20 to-transparent" />

@@ -89,7 +89,7 @@ export default function Navbar() {
           </a>
           <a
             href={SMS_LINK}
-            className="flex items-center gap-2 bg-maroon hover:bg-maroon-light text-white text-sm font-display font-medium px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-maroon/20"
+            className="flex items-center gap-2 bg-maroon hover:bg-maroon-light text-white text-sm font-display font-medium px-5 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-maroon/20 active:scale-[0.96]"
           >
             <MessageCircle className="w-4 h-4" />
             <span className="hidden sm:inline">Text Me</span>
