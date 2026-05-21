@@ -106,28 +106,27 @@ export default function ContactSection() {
       </div>
 
       <div className="container relative z-10">
-        {/* Section header — centered */}
-        <div className="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
-          <motion.span
+        {/* Section header — editorial chapter mark */}
+        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+          <motion.div
             custom={0}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-display text-xs tracking-[0.25em] uppercase text-maroon font-medium block mb-4"
+            className="mb-7 inline-flex justify-center"
           >
-            Get In Touch
-          </motion.span>
+            <span className="chapter-mark">Final Chapter — Get in Touch</span>
+          </motion.div>
 
           <motion.h2
             custom={0.1}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-display font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-charcoal"
+            className="display-headline text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6rem] text-charcoal"
           >
-            Ready to start
-            <br />
-            <span className="text-maroon">your journey?</span>
+            Ready to start{" "}
+            <span className="display-italic text-maroon">your journey?</span>
           </motion.h2>
         </div>
 

@@ -1,15 +1,21 @@
 /**
- * Reviews — Auto-scrolling carousel of Google Business reviews
- * Design: Bright elegant section, revolving carousel with smooth infinite loop
- * Playfair Display headings, warm cream cards, halation glow
+ * Reviews — Editorial pull-quote treatment
+ * Design moves:
+ *  - Single hero-quote on top (the highlighted current review),
+ *    with massive opening quotation mark, magazine-pull-quote style
+ *  - The other reviews show as compact "next up" cards below
+ *  - Chapter mark, slow editorial pacing
+ *  - Auto-advance every 6s, paused on hover, dot navigation
+ *
+ * Content (review text/names) unchanged.
  */
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, useEffect, useState, useCallback } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 
-const easeOut: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const editorialEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 const REVIEWS = [
   {
@@ -49,15 +55,19 @@ const fadeUp: Variants = {
   visible: (delay: number) => ({
     y: 0,
     opacity: 1,
-    transition: { duration: 0.7, ease: easeOut, delay },
+    transition: { duration: 0.95, ease: editorialEase, delay },
   }),
 };
 
-function StarRating({ count }: { count: number }) {
+function StarRow({ count, className = "" }: { count: number; className?: string }) {
   return (
-    <div className="flex gap-0.5">
+    <div className={`flex gap-1 ${className}`}>
       {Array.from({ length: count }).map((_, i) => (
-        <Star key={i} className="w-4 h-4" style={{ fill: "oklch(0.72 0.12 75)", color: "oklch(0.72 0.12 75)" }} />
+        <Star
+          key={i}
+          className="w-4 h-4"
+          style={{ fill: "oklch(0.72 0.12 75)", color: "oklch(0.72 0.12 75)" }}
+        />
       ))}
     </div>
   );
@@ -80,169 +90,155 @@ export default function Reviews() {
     setCurrentIndex((prev) => (prev - 1 + totalReviews) % totalReviews);
   }, [totalReviews]);
 
-  // Auto-advance every 5 seconds
+  // Auto-advance every 6s (slower, more editorial)
   useEffect(() => {
     if (isPaused) return;
-    timerRef.current = setInterval(goToNext, 5000);
+    timerRef.current = setInterval(goToNext, 6000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [isPaused, goToNext]);
 
-  // Get visible reviews (show 3 on desktop, 1 on mobile)
-  const getVisibleIndices = () => {
-    const indices = [];
-    for (let i = 0; i < 3; i++) {
-      indices.push((currentIndex + i) % totalReviews);
-    }
-    return indices;
-  };
-
-  const visibleIndices = getVisibleIndices();
+  const current = REVIEWS[currentIndex];
 
   return (
     <section
       id="reviews"
       ref={ref}
-      className="relative py-24 sm:py-32 lg:py-40 bg-cream-dark overflow-hidden"
+      className="relative py-28 sm:py-36 lg:py-44 overflow-hidden bg-cream-dark"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Halation glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[60%] pointer-events-none" style={{
-        background: "radial-gradient(ellipse at center, oklch(0.78 0.10 75 / 0.05) 0%, oklch(0.55 0.14 18 / 0.03) 40%, transparent 65%)",
-        filter: "blur(80px)",
-      }} />
+      {/* Soft gold atmosphere */}
+      <div
+        className="atmosphere"
+        style={{
+          top: "10%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "80%",
+          height: "70%",
+          background:
+            "radial-gradient(ellipse at center, oklch(0.78 0.10 75 / 0.07) 0%, oklch(0.55 0.14 18 / 0.04) 40%, transparent 70%)",
+        }}
+      />
 
       <div className="container relative z-10">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-          <motion.span
+        <div className="max-w-3xl mb-12 sm:mb-16">
+          <motion.div
             custom={0}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-display text-xs tracking-[0.25em] uppercase text-maroon font-medium block mb-4"
+            className="mb-7"
           >
-            Client Reviews
-          </motion.span>
+            <span className="chapter-mark">Voices — Client Reviews</span>
+          </motion.div>
           <motion.h2
             custom={0.1}
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="font-display font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-charcoal"
+            className="display-headline text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] xl:text-[6rem] text-charcoal"
           >
-            What people
-            <br />
-            <span className="text-maroon">are saying.</span>
+            What people{" "}
+            <span className="display-italic text-maroon">are saying.</span>
           </motion.h2>
+          <motion.div
+            custom={0.2}
+            variants={fadeUp}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="flex items-center gap-3 mt-7"
+          >
+            <StarRow count={5} className="!gap-0.5" />
+            <span className="font-display font-semibold text-lg text-charcoal">5.0</span>
+            <span className="display-italic text-sm text-warm-gray">on Google</span>
+          </motion.div>
         </div>
 
-        {/* Overall rating */}
+        {/* HERO PULL-QUOTE — current review oversized */}
         <motion.div
-          custom={0.15}
+          custom={0.3}
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="flex items-center justify-center gap-3 mb-12 sm:mb-16"
+          className="relative max-w-5xl"
         >
-          <div className="flex gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6" style={{ fill: "oklch(0.72 0.12 75)", color: "oklch(0.72 0.12 75)" }} />
-            ))}
+          <div className="relative pl-10 sm:pl-16 lg:pl-20 pr-2 pull-quote">
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={currentIndex}
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.6, ease: editorialEase }}
+                className="relative z-10 display-italic text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] leading-[1.25] text-charcoal"
+              >
+                {current.text}
+              </motion.blockquote>
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait">
+              <motion.figcaption
+                key={`caption-${currentIndex}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="mt-8 flex items-center gap-4 flex-wrap"
+              >
+                <span className="block w-8 h-px bg-maroon" />
+                <span className="font-display font-semibold text-charcoal tracking-wide">
+                  {current.name}
+                </span>
+                <span className="display-italic text-warm-gray-light text-sm">
+                  · {current.source}
+                </span>
+              </motion.figcaption>
+            </AnimatePresence>
           </div>
-          <span className="font-display font-bold text-xl sm:text-2xl text-charcoal">5.0</span>
-          <span className="text-warm-gray text-sm sm:text-base">on Google</span>
         </motion.div>
 
-        {/* Carousel */}
+        {/* Navigation */}
         <motion.div
-          custom={0.2}
+          custom={0.4}
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="relative"
+          className="flex items-center justify-between mt-12 sm:mt-16 max-w-5xl"
         >
-          {/* Cards container */}
-          <div className="relative overflow-hidden">
-            {/* Mobile: single card */}
-            <div className="sm:hidden">
-              <motion.div
-                key={`mobile-${currentIndex}`}
-                initial={{ opacity: 0, x: 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -60 }}
-                transition={{ duration: 0.5, ease: easeOut }}
-                className="bg-warm-white rounded-2xl p-7 border border-charcoal/5 shadow-sm"
-              >
-                <StarRating count={REVIEWS[currentIndex].rating} />
-                <p className="mt-5 text-slate text-base leading-relaxed italic">
-                  &ldquo;{REVIEWS[currentIndex].text}&rdquo;
-                </p>
-                <div className="mt-5 pt-4 border-t border-charcoal/5 flex items-center justify-between">
-                  <p className="font-display font-semibold text-sm text-charcoal">
-                    {REVIEWS[currentIndex].name}
-                  </p>
-                  <span className="text-xs text-warm-gray">{REVIEWS[currentIndex].source}</span>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Desktop: 3 cards */}
-            <div className="hidden sm:grid sm:grid-cols-3 gap-5 lg:gap-6">
-              {visibleIndices.map((reviewIdx, posIdx) => (
-                <motion.div
-                  key={`desktop-${currentIndex}-${posIdx}`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: easeOut, delay: posIdx * 0.08 }}
-                  className="bg-warm-white rounded-2xl p-7 border border-charcoal/5 hover:border-maroon/15 hover:shadow-xl hover:shadow-maroon/10 lift-on-hover"
-                >
-                  <StarRating count={REVIEWS[reviewIdx].rating} />
-                  <p className="mt-5 text-slate text-sm lg:text-base leading-relaxed italic">
-                    &ldquo;{REVIEWS[reviewIdx].text}&rdquo;
-                  </p>
-                  <div className="mt-5 pt-4 border-t border-charcoal/5 flex items-center justify-between">
-                    <p className="font-display font-semibold text-sm text-charcoal">
-                      {REVIEWS[reviewIdx].name}
-                    </p>
-                    <span className="text-xs text-warm-gray">{REVIEWS[reviewIdx].source}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+          {/* Dots */}
+          <div className="flex items-center gap-2.5">
+            {REVIEWS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                className={`h-px transition-all duration-700 ${
+                  i === currentIndex ? "w-12 bg-maroon" : "w-6 bg-charcoal/20 hover:bg-charcoal/40"
+                }`}
+                aria-label={`Go to review ${i + 1}`}
+              />
+            ))}
+            <span className="display-italic text-xs text-warm-gray-light ml-4 tracking-wide">
+              {String(currentIndex + 1).padStart(2, "0")} /{" "}
+              {String(totalReviews).padStart(2, "0")}
+            </span>
           </div>
 
-          {/* Navigation arrows + dots */}
-          <div className="flex items-center justify-center gap-6 mt-8 sm:mt-10">
+          {/* Arrows */}
+          <div className="flex items-center gap-2">
             <button
               onClick={goToPrev}
-              className="w-10 h-10 rounded-full border border-charcoal/10 flex items-center justify-center text-charcoal hover:bg-maroon hover:text-white hover:border-maroon transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-charcoal/15 flex items-center justify-center text-charcoal hover:bg-maroon hover:text-white hover:border-maroon active:scale-[0.95] transition-all duration-500"
               aria-label="Previous review"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-
-            {/* Dots */}
-            <div className="flex gap-2">
-              {REVIEWS.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentIndex(i)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === currentIndex
-                      ? "bg-maroon w-6"
-                      : "bg-charcoal/15 hover:bg-charcoal/30"
-                  }`}
-                  aria-label={`Go to review ${i + 1}`}
-                />
-              ))}
-            </div>
-
             <button
               onClick={goToNext}
-              className="w-10 h-10 rounded-full border border-charcoal/10 flex items-center justify-center text-charcoal hover:bg-maroon hover:text-white hover:border-maroon transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-charcoal/15 flex items-center justify-center text-charcoal hover:bg-maroon hover:text-white hover:border-maroon active:scale-[0.95] transition-all duration-500"
               aria-label="Next review"
             >
               <ChevronRight className="w-5 h-5" />
@@ -252,21 +248,31 @@ export default function Reviews() {
 
         {/* Google link */}
         <motion.div
-          custom={0.5}
+          custom={0.55}
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="text-center mt-8 sm:mt-10"
+          className="mt-14 sm:mt-16"
         >
           <a
             href="https://www.google.com/search?q=Gilliam+Lard+real+estate+Blacksburg+VA+reviews"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-maroon hover:text-maroon-light font-display font-medium transition-colors duration-300"
+            className="inline-flex items-center gap-2 display-italic text-sm text-maroon hover:text-maroon-light transition-colors duration-500"
           >
             View all reviews on Google
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
             </svg>
           </a>
         </motion.div>

@@ -404,4 +404,184 @@ body {
       transform: none;
     }
   }
+
+  /* ========================================
+     EDITORIAL PASS
+     Magazine-style typography + pacing
+     Inspired by linear.app + vanschneider.com
+     ======================================== */
+
+  /* Chapter mark — replaces the "01 / ABOUT" pattern.
+     A short hairline + italic Playfair label. */
+  .chapter-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.875rem;
+    color: oklch(0.55 0.01 60);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+  }
+  .chapter-mark::before {
+    content: '';
+    width: 2.25rem;
+    height: 1px;
+    background: oklch(0.55 0.01 60 / 0.5);
+  }
+  .chapter-mark--gold {
+    color: oklch(0.72 0.12 75);
+  }
+  .chapter-mark--gold::before {
+    background: oklch(0.72 0.12 75 / 0.55);
+  }
+  .chapter-mark--light {
+    color: oklch(0.85 0.02 80 / 0.7);
+  }
+  .chapter-mark--light::before {
+    background: oklch(0.85 0.02 80 / 0.5);
+  }
+
+  /* Editorial display headings — bigger, tighter, magazine-cover scale */
+  .display-headline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: oklch(0.22 0.008 260);
+  }
+
+  /* Italic serif accent — for pull quotes, tag lines, signatures */
+  .display-italic {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  /* Pull quote — oversized opening quote glyph */
+  .pull-quote {
+    position: relative;
+  }
+  .pull-quote::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.55em;
+    left: -0.15em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 6em;
+    line-height: 1;
+    color: oklch(0.38 0.14 18 / 0.18);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .pull-quote--gold::before {
+    color: oklch(0.72 0.12 75 / 0.35);
+  }
+  .pull-quote--light::before {
+    color: oklch(0.85 0.02 80 / 0.25);
+  }
+
+  /* Drawn-in gold underline — for italic tagline accent */
+  @keyframes draw-in {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+  .gold-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.12em;
+    height: 1.5px;
+    background: linear-gradient(90deg, oklch(0.72 0.12 75), oklch(0.55 0.14 18));
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: draw-in 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+  }
+
+  /* Atmospheric breathing gradient — slow, subtle, linear.app-style */
+  @keyframes atmosphere-drift {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 0.55;
+    }
+    50% {
+      transform: translate3d(2%, -1.5%, 0) scale(1.06);
+      opacity: 0.75;
+    }
+  }
+  .atmosphere {
+    position: absolute;
+    pointer-events: none;
+    filter: blur(80px);
+    animation: atmosphere-drift 14s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .atmosphere,
+    .gold-underline::after {
+      animation: none;
+    }
+    .gold-underline::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* Ken-burns — slow continuous image drift */
+  @keyframes ken-burns {
+    0% { transform: scale(1.05) translate3d(0, 0, 0); }
+    50% { transform: scale(1.12) translate3d(-1%, -1%, 0); }
+    100% { transform: scale(1.05) translate3d(0, 0, 0); }
+  }
+  .ken-burns {
+    animation: ken-burns 22s ease-in-out infinite;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ken-burns {
+      animation: none;
+    }
+  }
+
+  /* Editorial section rule — thin gold divider with center dot */
+  .section-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    color: oklch(0.72 0.12 75);
+  }
+  .section-rule::before,
+  .section-rule::after {
+    content: '';
+    flex: 1;
+    max-width: 5rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, oklch(0.72 0.12 75 / 0.5), transparent);
+  }
+  .section-rule__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: oklch(0.72 0.12 75);
+  }
+
+  /* Monogram watermark — elegant italic letter behind hero */
+  .monogram {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1;
+    color: oklch(0.38 0.14 18);
+    opacity: 0.05;
+    user-select: none;
+    pointer-events: none;
+  }
 }
